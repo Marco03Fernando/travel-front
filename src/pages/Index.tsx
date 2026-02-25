@@ -1,7 +1,7 @@
 "use client"; // Important to run this on the client-side
 
 import { useState } from "react";
-import { Search, Loader2, AlertCircle, Compass } from "lucide-react";
+import { Search, Loader2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import ResultCard, { type SearchResult } from "@/components/ResultCard";
@@ -21,11 +21,13 @@ const Index = () => {
     setResults(null);
 
     try {
-      const res = await fetch("/api/search", {
+      // Using environment variable for API URL
+      const res = await fetch(import.meta.env.VITE_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: query.trim() }),
       });
+
       if (!res.ok) throw new Error("Request failed");
       const data = await res.json();
       setResults(data.matches ?? []);
