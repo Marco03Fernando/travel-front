@@ -21,9 +21,10 @@ const Index = () => {
     setResults(null);
 
     try {
-      // Using environment variable for API URL
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Use the environment variable
-      const res = await fetch(apiUrl, { // Ensure the backend API URL is correct
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Access the environment variable
+      console.log("API URL:", apiUrl); // Debugging line to ensure correct URL is being used
+
+      const res = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: query.trim() }),
