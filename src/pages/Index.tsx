@@ -22,7 +22,8 @@ const Index = () => {
 
     try {
       // Using environment variable for API URL
-      const res = await fetch(import.meta.env.VITE_API_URL, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Use the environment variable
+      const res = await fetch(apiUrl, { // Ensure the backend API URL is correct
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: query.trim() }),
