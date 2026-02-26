@@ -24,17 +24,24 @@ const Index = () => {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL; // Access the environment variable
       console.log("API URL:", apiUrl); // Debugging line to ensure correct URL is being used
 
-      const res = await fetch(apiUrl, {
+      // Log the full request URL
+      const requestUrl = `${apiUrl}`;
+      console.log("Making request to:", requestUrl);
+
+      const res = await fetch(requestUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: query.trim() }),
       });
 
-      if (!res.ok) throw new Error("Request failed");
+      console.log("Response Status:", res.status); // Log the response status
+
+      if (!res.ok) throw new Error(`Request failed with status: ${res.status}`);
       const data = await res.json();
       setResults(data.matches ?? []);
-    } catch {
-      setError("Something went wrong. Please try again.");
+    } catch (e: any) {
+      console.error("Error during fetch:", e); // Log the error
+      setError(`Something went wrong. ${e?.message || "Please try again."}`);
     } finally {
       setLoading(false);
     }
